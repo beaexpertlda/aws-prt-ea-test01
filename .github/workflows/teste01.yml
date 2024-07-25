@@ -34,10 +34,10 @@ jobs:
       - name: Run a multi-line script
         run: |
           sudo apt -y update
-          sudo apt install -y postgresql-common
+          sudo apt install -y postgresql-client
           echo ${{ secrets.PG_PASS }} > chave.pem
           echo ${{ vars.DB_HOST }}
           chmod 600 chave.pem
           ls -all
           cat chave.pem
-          psql -d db-ea@${{ vars.DB_HOST }} -U postgres
+          PGPASSWORD=${{ secrets.PG_PASS }} psql -d db-ea -h ${{ vars.DB_HOST }} -U postgres
